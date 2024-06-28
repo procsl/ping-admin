@@ -1,0 +1,88 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <name>Ping Admin</name>
+
+  <groupId>cn.procsl</groupId>
+  <version>1.0.0</version>
+  <artifactId>ping-admin</artifactId>
+  <packaging>jar</packaging>
+
+  <properties>
+    <java.version>21</java.version>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.compilerVersion>${java.version}</maven.compiler.compilerVersion>
+    <compiler.version>${java.version}</compiler.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <springboot.version>3.2.1</springboot.version>
+  </properties>
+
+
+  <dependencies>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <version>3.2.6</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>exec-npm-run-build</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <!--程序名称-->
+              <executable>pnpm</executable>
+              <arguments>
+                <!-- 程序所执行的命令-->
+                <argument>build</argument>
+              </arguments>
+              <!--前端代码地址-->
+              <workingDirectory>${basedir}</workingDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <!--maven-resources-plugin：maven复制文件插件-->
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-resource</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <!--输出文件路径-->
+              <outputDirectory>${project.build.outputDirectory}/META-INF/resources/ui
+              </outputDirectory>
+              <resources>
+                <resource>
+                  <!--前端代码地址-->
+                  <directory>${project.build.directory}/dist</directory>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+
+  </build>
+
+
+</project>

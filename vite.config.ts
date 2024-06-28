@@ -1,8 +1,8 @@
 import process from 'node:process';
-import { URL, fileURLToPath } from 'node:url';
-import { defineConfig, loadEnv } from 'vite';
-import { setupVitePlugins } from './build/plugins';
-import { createViteProxy, getBuildTime } from './build/config';
+import {fileURLToPath, URL} from 'node:url';
+import {defineConfig, loadEnv} from 'vite';
+import {setupVitePlugins} from './build/plugins';
+import {createViteProxy, getBuildTime} from './build/config';
 
 export default defineConfig(configEnv => {
   const viteEnv = loadEnv(configEnv.mode, process.cwd()) as unknown as Env.ImportMeta;
@@ -41,6 +41,7 @@ export default defineConfig(configEnv => {
       port: 9725
     },
     build: {
+      outDir: './target/generated-resources/public',
       reportCompressedSize: false,
       sourcemap: viteEnv.VITE_SOURCE_MAP === 'Y',
       commonjsOptions: {
@@ -49,3 +50,4 @@ export default defineConfig(configEnv => {
     }
   };
 });
+
